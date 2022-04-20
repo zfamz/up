@@ -6,8 +6,8 @@ const buildOptions = {
   input: ['src/index.js', 'src/utils.js'],
   output: [
     {
-      dir: 'dist/esm',
-      format: 'esm',
+      dir: 'dist/es',
+      format: 'es',
       plugins: [terser()],
     },
     {
