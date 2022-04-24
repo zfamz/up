@@ -1,5 +1,5 @@
 {
-  "name": "vite-project",
+  "name": "vue3-project",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite --port 4000 --open",
