@@ -12,6 +12,14 @@ export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd())
   console.log('env:', command, mode, env)
   return {
+    build: {
+      rollupOptions: {
+        input: {
+          main: resolve(__dirname, 'index.html'),
+          test: resolve(__dirname, 'test.html'),
+        }
+      }
+    },
     plugins: [
       // inspect(),
       react(),
