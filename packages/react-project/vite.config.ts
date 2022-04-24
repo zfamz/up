@@ -1,5 +1,8 @@
 import { defineConfig, loadEnv, normalizePath } from 'vite'
+// 插件开发控制台
 // import  inspect  from "vite-plugin-inspect";
+// polyfill, 代码降级
+// import legacy from "@vitejs/plugin-legacy";
 import react from '@vitejs/plugin-react'
 import Unocss from 'unocss/vite'
 import { presetUno } from 'unocss'
@@ -14,6 +17,7 @@ export default defineConfig(({ command, mode }) => {
   return {
     build: {
       // rollupOptions: {
+      // 多页面配置
       //   input: {
       //     main: resolve(__dirname, 'index.html'),
       //     test: resolve(__dirname, 'test.html'),
@@ -21,6 +25,7 @@ export default defineConfig(({ command, mode }) => {
       // }
     },
     plugins: [
+      // legacy({ targets: ['ie >= 11'] }),
       // inspect(),
       react(),
       virtual(),
