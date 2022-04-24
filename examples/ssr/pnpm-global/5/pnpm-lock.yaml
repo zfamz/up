@@ -1,0 +1,5 @@
+lockfileVersion: 5.3
+
+specifiers:
+  esno: ^0.14.1
+  nodemon: ^2.0.15
