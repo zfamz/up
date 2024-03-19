@@ -29,7 +29,8 @@
     </style>
   </head>
   <body>
-    <button onclick="handleChange()">change text</button>
+    <button onclick="handleChange(true)">change with URL</button>
+    <button onclick="handleChange()">change with Base64</button>
   </body>
   <div id="watermark"></div>
   <!-- <div style="border: 1px solid red">
@@ -40,18 +41,41 @@
     </svg>
   </div> -->
   <script>
-    let url
-    function handleChange() {
+    function handleChange(flag) {
       const text = Math.random()
-      console.log('🚀 ~ handleChange ~ handleChange:', text)
+      flag ? markWithBolb(text) : markWithBase64(text)
+    }
+    let url
+    function markWithBolb(text) {
+      url && URL.revokeObjectURL(url)
+      const svg = getSvgText(text)
+      const blob = new Blob([svg], { type: 'image/svg+xml' })
+      url = URL.createObjectURL(blob)
+      setMarkUrl(url)
+    }
+    function markWithBase64(text) {
+      const svg = getSvgText(text)
+      const blob = new Blob([svg], { type: 'image/svg+xml' })
+      blobToBase64(blob).then(res => {
+        setMarkUrl(res)
+      })
+    }
+    function blobToBase64(blob) {
+      return new Promise((resolve, _) => {
+        const reader = new FileReader()
+        reader.onloadend = () => resolve(reader.result)
+        reader.readAsDataURL(blob)
+      })
+    }
+
+    function getSvgText(text) {
       // const svg = `<svg class="watermark" xmlns="http://www.w3.org/2000/svg" width="200" height="200"> <text x="0" y="15" font-size="20" fill="rgba(204,204,204,1.5)">${text}</text> </svg>`
       const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">
       <text x="-80" y="160" font-size="20" style="transform: rotate(-30deg)" fill="rgba(204,204,204,0.5)">
       ${text} </text> </svg>`
-
-      const blob = new Blob([svg], { type: 'image/svg+xml' })
-      url && URL.revokeObjectURL(url)
-      url = URL.createObjectURL(blob)
+      return svg
+    }
+    function setMarkUrl(url) {
       const watermark_dom = document.querySelector('#watermark')
       watermark_dom.style = `background-image: url(${url})`
     }
