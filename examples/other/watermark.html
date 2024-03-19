@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>水印</title>
+    <style>
+      #watermark {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        pointer-events: none;
+        background-color: transparent;
+        background-repeat: repeat;
+        background-position: center;
+        /* background: gray; */
+        opacity: 0.3;
+      }
+      .pointer {
+        cursor: pointer;
+      }
+      .flex-center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <button onclick="handleChange()">change text</button>
+  </body>
+  <div id="watermark"></div>
+  <!-- <div style="border: 1px solid red">
+    <svg class="watermark" xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+      <text x="-80" y="160" font-size="20" style="transform: rotate(-30deg)" fill="rgba(204,204,204,0.5)">
+        水印内容asd
+      </text>
+    </svg>
+  </div> -->
+  <script>
+    let url
+    function handleChange() {
+      const text = Math.random()
+      console.log('🚀 ~ handleChange ~ handleChange:', text)
+      // const svg = `<svg class="watermark" xmlns="http://www.w3.org/2000/svg" width="200" height="200"> <text x="0" y="15" font-size="20" fill="rgba(204,204,204,1.5)">${text}</text> </svg>`
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+      <text x="-80" y="160" font-size="20" style="transform: rotate(-30deg)" fill="rgba(204,204,204,0.5)">
+      ${text} </text> </svg>`
+
+      const blob = new Blob([svg], { type: 'image/svg+xml' })
+      url && URL.revokeObjectURL(url)
+      url = URL.createObjectURL(blob)
+      const watermark_dom = document.querySelector('#watermark')
+      watermark_dom.style = `background-image: url(${url})`
+    }
+  </script>
+</html>
